@@ -7,6 +7,7 @@ public class ControladoraPersistencia {
     
     // Controladora que tiene una instancia de todos los controladores JPA
     private UsuarioJpaController usuarioJpa = new UsuarioJpaController();
+    private RolJpaController rolJpa = new RolJpaController();
     
     //Constructor Vacio
     public ControladoraPersistencia() {}

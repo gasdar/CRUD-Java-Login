@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Usuario implements Serializable {
@@ -18,11 +20,15 @@ public class Usuario implements Serializable {
     private String nombreUsuario;
     private String clave;
     
+    @ManyToOne
+    @JoinColumn(name="fk_idRol")
+    private Rol rolUsuario;
+    
     public Usuario() {}
-    public Usuario(int id, String nombreUsuario, String clave) {
-        this.id = id;
+    public Usuario(String nombreUsuario, String clave, Rol rolUsuario) {
         this.nombreUsuario = nombreUsuario;
         this.clave = clave;
+        this.rolUsuario = rolUsuario;
     }
 
     public int getId() {
@@ -49,9 +55,17 @@ public class Usuario implements Serializable {
         this.clave = clave;
     }
 
+    public Rol getRolUsuario() {
+        return rolUsuario;
+    }
+
+    public void setRolUsuario(Rol rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombreUsuario=" + nombreUsuario + ", clave=" + clave + '}';
+        return "Usuario{" + "id=" + id + ", nombreUsuario=" + nombreUsuario + ", clave=" + clave + ", rolUsuario=" + rolUsuario + '}';
     }
     
 }

@@ -2,11 +2,11 @@ package com.mycompany.login.gui;
 
 import com.mycompany.login.logic.Controladora;
 
-public class Principal extends javax.swing.JFrame {
+public class LoginPrincipal extends javax.swing.JFrame {
 
     private Controladora control = null;
     
-    public Principal() {
+    public LoginPrincipal() {
         control = new Controladora();
         initComponents();
     }
@@ -207,6 +207,7 @@ public class Principal extends javax.swing.JFrame {
         String clave = txtClave.getText();
         
         String mensaje = control.validarUsuario(usuario, clave);
+        String rol = control.validarRol(usuario, clave);
         
         txtMensaje.setText(mensaje);
     }//GEN-LAST:event_btnIniciarActionPerformed
