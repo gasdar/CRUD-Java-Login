@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+/*import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;*/
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 public class Rol implements Serializable {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    // @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private int id;
     
     @Basic

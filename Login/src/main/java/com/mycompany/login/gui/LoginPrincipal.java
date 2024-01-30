@@ -1,6 +1,7 @@
 package com.mycompany.login.gui;
 
 import com.mycompany.login.logic.Controladora;
+import com.mycompany.login.logic.Usuario;
 
 public class LoginPrincipal extends javax.swing.JFrame {
 
@@ -31,6 +32,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtMensaje = new javax.swing.JTextArea();
         txtClave = new javax.swing.JPasswordField();
+        btnSalir = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -98,6 +100,14 @@ public class LoginPrincipal extends javax.swing.JFrame {
 
         txtClave.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
 
+        btnSalir.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -129,6 +139,10 @@ public class LoginPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +164,9 @@ public class LoginPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -173,8 +189,7 @@ public class LoginPrincipal extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,18 +218,40 @@ public class LoginPrincipal extends javax.swing.JFrame {
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         
         // Botón de Iniciar Login
-        String usuario = txtUsuario.getText();
-        String clave = txtClave.getText();
+        String usuarioNombre = txtUsuario.getText();
+        String usuarioClave = txtClave.getText();
         
-        String mensaje = control.validarUsuario(usuario, clave);
-        String rol = control.validarRol(usuario, clave);
+        Usuario user = control.validarUsuario(usuarioNombre, usuarioClave);
         
-        txtMensaje.setText(mensaje);
+        if(user != null) {
+            String rol = user.getRolUsuario().getNombre();
+            if(rol.equalsIgnoreCase("admin")) {
+                PrincipalAdmin pAdmin = new PrincipalAdmin(control, user); // Se entrega la controladora, para no crear más instancias.
+                pAdmin.setVisible(true);
+                pAdmin.setLocationRelativeTo(null);
+                this.dispose();
+            } else if(rol.equalsIgnoreCase("user")) {
+                PrincipalUser pUser = new PrincipalUser(control, user);
+                pUser.setVisible(true);
+                pUser.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                txtMensaje.setText("Rol de usuario desconocido");
+            }
+        } else {
+            txtMensaje.setText("Usuario o contraseña incorrectos");
+        }
+        
     }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
