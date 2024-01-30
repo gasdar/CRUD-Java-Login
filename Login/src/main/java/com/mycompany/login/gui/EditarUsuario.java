@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-public class RegistrarUsuario extends javax.swing.JFrame {
+public class EditarUsuario extends javax.swing.JFrame {
 
     private Controladora control = null;
     private Usuario usuarioControlador = null;
+    private Usuario uEditar = null;
     
-    public RegistrarUsuario(Controladora control, Usuario usuarioControlador) {
+    public EditarUsuario(Controladora control, Usuario usuarioControlador, Usuario uEditar) {
         this.control = control;
         this.usuarioControlador = usuarioControlador;
+        this.uEditar = uEditar;
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -30,8 +32,8 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtClave = new javax.swing.JPasswordField();
         cmbRol = new javax.swing.JComboBox<>();
-        btnRegistrar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnRestaurar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,7 +44,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans", 0, 36)); // NOI18N
-        jLabel1.setText("Registrar Usuario");
+        jLabel1.setText("Editar Usuario");
 
         jLabel2.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
         jLabel2.setText("Nombre de Usuario:");
@@ -59,19 +61,19 @@ public class RegistrarUsuario extends javax.swing.JFrame {
 
         cmbRol.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
 
-        btnRegistrar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
-        btnLimpiar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnRestaurar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnRestaurar.setText("Restaurar");
+        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                btnRestaurarActionPerformed(evt);
             }
         });
 
@@ -102,9 +104,9 @@ public class RegistrarUsuario extends javax.swing.JFrame {
                                 .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                                 .addComponent(txtClave))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -126,8 +128,8 @@ public class RegistrarUsuario extends javax.swing.JFrame {
                     .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -140,7 +142,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(99, 99, 99))
+                .addGap(127, 127, 127))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,6 +156,21 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        String nombreUsuario = txtNombre.getText();
+        String clave = txtClave.getText();
+        String rol = String.valueOf(cmbRol.getSelectedItem());
+        control.editarUsuario(uEditar, nombreUsuario, clave, rol);
+        this.uEditar = control.traerUsuario(uEditar.getId());
+        mostrarMensaje("Se ha editado el usuario con éxito.", "info", "Usuario Editado");
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        cargarRoles();
+        cargarDatosUsuario();
+        mostrarMensaje("Se han restaurados los últimos datos del usuario.", "info", "Usuario Restaurado");
+    }//GEN-LAST:event_btnRestaurarActionPerformed
+
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         PrincipalAdmin pAdmin = new PrincipalAdmin(control, usuarioControlador);
         pAdmin.setVisible(true);
@@ -161,27 +178,15 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiarCampos();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        String nombreUsuario = txtNombre.getText();
-        String clave = txtClave.getText();
-        String rol = String.valueOf(cmbRol.getSelectedItem());
-        control.registrarUsuario(nombreUsuario, clave, rol);
-        mostrarMensaje("Se ha registrado el usuario con éxito.", "info", "Usuario Creado");
-        limpiarCampos();
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        cargarRoles();        
+        cargarRoles();
+        cargarDatosUsuario();
     }//GEN-LAST:event_formWindowOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnRestaurar;
     private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -191,12 +196,6 @@ public class RegistrarUsuario extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
-
-    private void limpiarCampos() {
-        txtNombre.setText("");
-        txtClave.setText("");
-        cmbRol.setSelectedIndex(0);
-    }
 
     private void cargarRoles() {
         ArrayList<Rol> listaRoles = control.traerRoles();
@@ -225,4 +224,12 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         dialog.setVisible(true);
         dialog.setAlwaysOnTop(true);
     }
+
+    private void cargarDatosUsuario() {
+        txtNombre.setText(uEditar.getNombreUsuario());
+        txtClave.setText(uEditar.getClave());
+        int posRol = control.buscarPosicionRol(cmbRol, uEditar);
+        cmbRol.setSelectedIndex(posRol);
+    }
+    
 }   // FIN DE CLASE

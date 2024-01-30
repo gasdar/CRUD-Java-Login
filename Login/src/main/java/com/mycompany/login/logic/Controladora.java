@@ -2,6 +2,7 @@ package com.mycompany.login.logic;
 
 import com.mycompany.login.persistence.ControladoraPersistencia;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 
 public class Controladora {
     
@@ -22,11 +23,24 @@ public class Controladora {
         usuario.setId(idUsuario);
         usuario.setNombreUsuario(nombreUsuario);
         usuario.setClave(clave);
-        if(rolUsuario != null) {
-            usuario.setRolUsuario(rolUsuario);
-        }
+        usuario.setRolUsuario(rolUsuario);
         
         controlPersis.registrarUsuario(usuario);
+    }
+    public void eliminarUsuario(int idUsuario) {
+        controlPersis.eliminarUsuario(idUsuario);
+    }
+    public void editarUsuario(Usuario uEditar, String nombreUsuario, String clave, String rol) {
+        Rol rolUsuario = encontrarRolDeUsuario(rol);
+        
+        uEditar.setNombreUsuario(nombreUsuario);
+        uEditar.setClave(clave);
+        uEditar.setRolUsuario(rolUsuario);
+        
+        controlPersis.editarUsuario(uEditar);
+    }
+    public Usuario traerUsuario(int idUsuario) {
+        return controlPersis.traerUsuario(idUsuario);
     }
     public ArrayList<Usuario> traerUsuarios() {
         return controlPersis.traerUsuarios();
@@ -90,6 +104,20 @@ public class Controladora {
         }
         
         return rolUsuario;
+    }
+    public int buscarPosicionRol(JComboBox<String> cmbRol, Usuario uEditar) {
+        int pos = 0;
+        
+        String nombreRol = uEditar.getRolUsuario().getNombre();
+        for(int i=0; i<cmbRol.getItemCount(); i++) {
+            String rol = cmbRol.getItemAt(i);
+            if(nombreRol.equals(rol)) {
+                pos = i;
+                return pos;
+            }
+        }
+        
+        return pos;
     }
     
 }   // FIN DE CLASE

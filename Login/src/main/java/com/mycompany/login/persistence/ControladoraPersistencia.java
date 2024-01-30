@@ -2,8 +2,11 @@ package com.mycompany.login.persistence;
 
 import com.mycompany.login.logic.Rol;
 import com.mycompany.login.logic.Usuario;
+import com.mycompany.login.persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControladoraPersistencia {
     
@@ -18,6 +21,23 @@ public class ControladoraPersistencia {
     public void registrarUsuario(Usuario usuario) {
         usuarioJpa.create(usuario);
     }
+    public void eliminarUsuario(int idUsuario) {
+        try {
+            usuarioJpa.destroy(idUsuario);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void editarUsuario(Usuario uEditar) {
+        try {
+            usuarioJpa.edit(uEditar);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public Usuario traerUsuario(int idUsuario) {
+        return usuarioJpa.findUsuario(idUsuario);
+    }
     public ArrayList<Usuario> traerUsuarios() {
         List<Usuario> allUsuarios = usuarioJpa.findUsuarioEntities();
         ArrayList<Usuario> listaUsuarios = new ArrayList<> (allUsuarios);
@@ -30,6 +50,5 @@ public class ControladoraPersistencia {
         ArrayList<Rol> listaRoles = new ArrayList<> (allRoles);
         return listaRoles;
     }
-    
     
 }

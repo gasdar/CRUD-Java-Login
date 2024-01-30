@@ -67,9 +67,19 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         btnEditar.setText("Editar Usuario");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         btnEliminar.setText("Eliminar Usuario");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnRefrescar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         btnRefrescar.setText("Refrescar");
@@ -185,11 +195,47 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioActionPerformed
-        RegistrarUsuario pRegistrarUsuario = new RegistrarUsuario(control, usuario);
-        pRegistrarUsuario.setVisible(true);
-        pRegistrarUsuario.setLocationRelativeTo(null);
+        RegistrarUsuario pRegistrar = new RegistrarUsuario(control, usuario);
+        pRegistrar.setVisible(true);
+        pRegistrar.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnNuevoUsuarioActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        if(tblUsuarios.getRowCount() > 0) {
+            if(tblUsuarios.getSelectedRow() != -1) {
+                int idUsuario = Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
+                control.eliminarUsuario(idUsuario);
+                mostrarMensaje("Se ha eliminado el usuario con éxito.", "info", "Usuario Eliminado");
+                cargarTabla();
+            } else {
+                mostrarMensaje("Debe seleccionar el registro que desea eliminar.", "error", "Error al Eliminar");
+            }
+        } else {
+            mostrarMensaje("No se pudo encotrar ningún registro, para ser eliminado.", "error", "Error al Eliminar");
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       
+        if(tblUsuarios.getRowCount() > 0) {
+            if(tblUsuarios.getSelectedRow() != -1) {
+                int idUsuario = Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
+                Usuario uEditar = control.traerUsuario(idUsuario);
+                EditarUsuario pEditar = new EditarUsuario(control, usuario, uEditar);
+                pEditar.setVisible(true);
+                pEditar.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                mostrarMensaje("Debe seleccionar el registro que desea editar.", "error", "Error al Editar");
+            }
+        } else {
+            mostrarMensaje("No se pudo encotrar ningún registro, para ser editado.", "error", "Error al Editar");
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
